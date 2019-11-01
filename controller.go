@@ -48,6 +48,8 @@ func Create(ctx echo.Context) error {
  * Tratar os buscas em uma collection
  */
 func Retrieve(ctx echo.Context) error {
+	var paramName = ctx.ParamValues()[0]
+	fmt.Println(paramName)
 	return ctx.JSON(http.StatusOK, "Search Working")
 }
 
@@ -55,6 +57,8 @@ func Retrieve(ctx echo.Context) error {
  * Tratar os updates em uma collection
  */
 func Update(ctx echo.Context) error {
+	var paramName = ctx.ParamValues()[0]
+	fmt.Println(paramName)
 	return ctx.JSON(http.StatusOK, "Update Working")
 }
 
@@ -62,5 +66,7 @@ func Update(ctx echo.Context) error {
  * Tratar os deletes em uma collection
  */
 func Delete(ctx echo.Context) error {
+	var paramName = ctx.ParamValues()[0]
+	fmt.Println(paramName)
 	return ctx.JSON(http.StatusOK, "Delete Working")
 }
