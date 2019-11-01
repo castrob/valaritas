@@ -1,21 +1,22 @@
 package valaritas
 
 import (
-	"github.com/labstack/echo"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/labstack/echo"
 )
 
 var (
-	metadata = &META{}
+	metadata        = &META{}
 	lockedResources = &LOCK{}
 )
 
 /**
  * Root para acessos em /api/
  */
-
 func Root(ctx echo.Context) error {
 	// Exemplo de como usar o metadata (podemos mudar isso dps)
 	userCollection := map[string]interface{}{
@@ -34,11 +35,12 @@ func Root(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "Authors: Felipe Megale\nGuilherme Galvão\nJoão Castro\n Natália Miranda\nPUC Minas 2019")
 }
 
-
 /**
  * Tratar os inserts em uma collection
  */
 func Create(ctx echo.Context) error {
+	var paramName = ctx.ParamValues()[0]
+	fmt.Println(paramName)
 	return ctx.JSON(http.StatusOK, "Create Working")
 }
 
@@ -62,5 +64,3 @@ func Update(ctx echo.Context) error {
 func Delete(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "Delete Working")
 }
-
-
