@@ -39,9 +39,14 @@ func Root(ctx echo.Context) error {
  * Tratar os inserts em uma collection
  */
 func Create(ctx echo.Context) error {
+	// lock arquivo de dados
+
 	var paramName = ctx.ParamValues()[0]
+	// var body = ctx.Request
 	fmt.Println(paramName)
-	return ctx.JSON(http.StatusOK, "Create Working")
+
+	// unlock arquivo de dados
+	return ctx.JSON(http.StatusOK, fmt.Sprintf("Collection %s created successfully!", paramName))
 }
 
 /**
