@@ -10,19 +10,10 @@ import "time"
  * @Params: Upsert, ReturnId
  */
 type COMMAND struct {
-	Command string `json:"command"`
-	Search	interface{}	`json:"search,omitempty"`
-	Data	interface{} `json:"data"`
-	Params 	interface{}	`json:"params,omitempty"`
-}
-
-/**
- * META é responsável por manter as informações de cada collection e seus campos
- * LastUpdateDate serve de controle pra quando META foi alterado ou não.
- */
-type META struct {
-	Collections	[]interface{}	`json:"collections"`
-	LastUpdateDate time.Time `json:"lastUpdateDate"`
+	Command string      `json:"command"`
+	Search  interface{} `json:"search,omitempty"`
+	Data    interface{} `json:"data"`
+	Params  interface{} `json:"params,omitempty"`
 }
 
 /**
@@ -30,16 +21,16 @@ type META struct {
  * LastUpdateDate serve de controle pra quando LOCK foi alterado ou não
  */
 type LOCK struct {
-	Resources []interface{} `json:"resources"`
-	LastUpdateDate time.Time `json:"lastUpdateDate"`
+	Resources      []interface{} `json:"resources"`
+	LastUpdateDate time.Time     `json:"lastUpdateDate"`
 }
 
 /**
  * o modelo de cada Documento é esse
  */
 type DOCUMENT struct {
-	Id	string	`json:"_id"`
-	Content interface{} `json:"content"`
-	CreateDate time.Time `json:"createDate"`
-	LastUpdateDate time.Time `json:"lastUpdateDate"`
+	Id             string      `json:"_id"`
+	Content        interface{} `json:"content"`
+	CreateDate     time.Time   `json:"createDate"`
+	LastUpdateDate time.Time   `json:"lastUpdateDate"`
 }

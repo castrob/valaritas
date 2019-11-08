@@ -19,8 +19,8 @@ func main() {
 
 	//Endpoits para cada função
 	apiGroup.GET("/", valaritas.Root)
-	apiGroup.GET("/:collection/_search", valaritas.Retrieve)
 	apiGroup.POST("/:collection/_create", valaritas.Create)
+	apiGroup.GET("/:collection/_search", valaritas.Retrieve)
 	apiGroup.PUT("/:collection/_update", valaritas.Update)
 	apiGroup.DELETE("/:collection/_delete", valaritas.Delete)
 

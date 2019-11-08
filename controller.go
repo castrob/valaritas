@@ -6,11 +6,14 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/castrob/valaritas/utils"
 	"github.com/labstack/echo"
 )
 
 var (
-	metadata        = &META{}
+	metadata = &utils.META{
+		Collections: make(map[string][]string),
+	}
 	lockedResources = &LOCK{}
 )
 
@@ -19,16 +22,8 @@ var (
  */
 func Root(ctx echo.Context) error {
 	// Exemplo de como usar o metadata (podemos mudar isso dps)
-	userCollection := map[string]interface{}{
-		"Name": "user",
-		"Fields": []interface{}{
-			"nome",
-			"sexo",
-			"idade",
-		},
-	}
 	log.Printf(" Antes de atualizar: %+v", metadata)
-	metadata.Collections = append(metadata.Collections, userCollection)
+	metadata.Collections["users"] = []string{"a", "b", "c"}
 	metadata.LastUpdateDate = time.Now()
 	log.Printf(" Depois de atualizar: %+v", metadata)
 	log.Printf("%+v", lockedResources)
@@ -41,12 +36,42 @@ func Root(ctx echo.Context) error {
 func Create(ctx echo.Context) error {
 	// lock arquivo de dados
 
-	var paramName = ctx.ParamValues()[0]
-	// var body = ctx.Request
-	fmt.Println(paramName)
+	var request = echo.Map{}
+	if err := ctx.Bind(&request); err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(request)
+
+	if request["collection"] != nil {
+		collection := fmt.Sprintf("%v", request["collection"])
+
+		// todos os campos que estao chegando
+		fields := []string{}
+		for key := range request {
+			if key != "collection" {
+				fields = append(fields, key)
+			}
+		}
+
+		if metadata.FindMetadataByName(collection) {
+			// verificar todos os campos que existem na collection
+			// e inserir os novos
+			for field := range fields {
+				if field not in metadata.Collections[collection] {
+					metadata.Collections[collection] = append(metadata.Collections[collection], field)
+				}
+			}
+		} else {
+			// inserir nova chave com seus valores
+			metadata.Collections[collection] = fields
+		}
+		log.Printf(" Depois de criar/inserir: %+v", metadata)
+	}
+	// se nao existe, criar; se existir, atualizar
+	// fmt.Println(paramName)
 
 	// unlock arquivo de dados
-	return ctx.JSON(http.StatusOK, fmt.Sprintf("Collection %s created successfully!", paramName))
+	return ctx.JSON(http.StatusOK, fmt.Sprintf("Collection %s created successfully!"))
 }
 
 /**
