@@ -27,6 +27,11 @@ func (meta *META) FindMetadataByName(paramName string) (result bool) {
 func (meta *META) NotContainsFieldInCollection(fieldName string, collection string) (result bool) {
 	result = false
 
-	for field := range meta.Collections[collection]
+	for field := range meta.Collections[collection] {
+		if fieldName == meta.Collections[collection][field] {
+			result = true
+		}
+	}
+
 	return
 }

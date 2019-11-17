@@ -57,8 +57,8 @@ func Create(ctx echo.Context) error {
 			// verificar todos os campos que existem na collection
 			// e inserir os novos
 			for field := range fields {
-				if field not in metadata.Collections[collection] {
-					metadata.Collections[collection] = append(metadata.Collections[collection], field)
+				if metadata.NotContainsFieldInCollection(fields[field], collection) {
+					metadata.Collections[collection] = append(metadata.Collections[collection], fields[field])
 				}
 			}
 		} else {
