@@ -95,7 +95,20 @@ func Update(ctx echo.Context) error {
  * Tratar os deletes em uma collection
  */
 func Delete(ctx echo.Context) error {
-	var paramName = ctx.ParamValues()[0]
-	fmt.Println(paramName)
+	var request = echo.Map{}
+
+	// implementacao filtrando as collections atuais
+
+	// verificar se o collection nao for nil
+	if request["collection"] != nil {
+		collection := fmt.Sprintf("%v", request["collection"])
+
+		_, ok := metadata.Collections[collection]
+		if ok {
+			delete(metadata.Collections, collection)
+		}
+	}
+	// verificar se collection existe mesmo
+
 	return ctx.JSON(http.StatusOK, "Delete Working")
 }
