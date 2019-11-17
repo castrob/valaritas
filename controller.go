@@ -77,8 +77,16 @@ func Create(ctx echo.Context) error {
  * Tratar os buscas em uma collection
  */
 func Retrieve(ctx echo.Context) error {
+	//var request = echo.Map{}
 	var paramName = ctx.ParamValues()[0]
-	fmt.Println(paramName)
+	fmt.Println("values %+v", paramName)
+	if metadata.FindMetadataByName(paramName) {// encontrou os dados
+		//log.Printf("Collections paranName %+v", metadata.Collections[paramName])
+		//return metadata.Collections["user"]
+	}else{ // caso nao encontrou os dados criar um novo
+		//log.Printf("Collections paramName %+v", metadata.Collections[paramName])
+		Create(ctx)
+	}
 	return ctx.JSON(http.StatusOK, "Search Working")
 }
 
