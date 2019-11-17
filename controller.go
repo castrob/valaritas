@@ -97,9 +97,6 @@ func Update(ctx echo.Context) error {
 func Delete(ctx echo.Context) error {
 	var request = echo.Map{}
 
-	// implementacao filtrando as collections atuais
-
-	// verificar se o collection nao for nil
 	if request["collection"] != nil {
 		collection := fmt.Sprintf("%v", request["collection"])
 
@@ -108,7 +105,6 @@ func Delete(ctx echo.Context) error {
 			delete(metadata.Collections, collection)
 		}
 	}
-	// verificar se collection existe mesmo
 
 	return ctx.JSON(http.StatusOK, "Delete Working")
 }
