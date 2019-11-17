@@ -67,7 +67,6 @@ func Create(ctx echo.Context) error {
 		}
 		log.Printf(" Depois de criar/inserir: %+v", metadata)
 	}
-	// se nao existe, criar; se existir, atualizar
 	// fmt.Println(paramName)
 
 	// unlock arquivo de dados
