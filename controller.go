@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/castrob/valaritas/utils"
@@ -77,9 +78,17 @@ func Create(ctx echo.Context) error {
  * Tratar os buscas em uma collection
  */
 func Retrieve(ctx echo.Context) error {
-	var paramName = ctx.ParamValues()[0]
-	fmt.Println(paramName)
-	return ctx.JSON(http.StatusOK, "Search Working")
+	var request = echo.Map{}
+	var collectionFound []string
+
+	if request["collection"] != nil {
+		collection := fmt.Sprintf("%v", request["collection"])
+
+		if metadata.FindMetadataByName(collection) {
+			collectionFound = metadata.Collections[collection]
+		}
+	}
+	return ctx.JSON(http.StatusOK, strings.Join(collectionFound, ","))
 }
 
 /**
