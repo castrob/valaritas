@@ -95,8 +95,16 @@ func Retrieve(ctx echo.Context) error {
  * Tratar os updates em uma collection
  */
 func Update(ctx echo.Context) error {
-	var paramName = ctx.ParamValues()[0]
-	fmt.Println(paramName)
+	var request = echo.Map{}
+
+	if request["collection"] != nil {
+		collection = := fmt.Sprintf("%v", request["collection"])
+
+		_, ok := metadata.Collections[collection]
+		if ok {
+			// acessar a collection e fazer reatribuir
+		}
+	}
 	return ctx.JSON(http.StatusOK, "Update Working")
 }
 
