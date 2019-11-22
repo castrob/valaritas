@@ -10,3 +10,6 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+/.vs
+/data/data/obj/Debug
+/data/.vs/parse_json/v16

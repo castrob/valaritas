@@ -1,0 +1,11 @@
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\print.exe.config
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\print.exe
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\print.pdb
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\data.dll
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\Newtonsoft.Json.dll
+C:\Users\nattt\source\repos\valaritas\print\bin\Debug\data.pdb
+C:\Users\nattt\source\repos\valaritas\print\obj\Debug\print.csprojAssemblyReference.cache
+C:\Users\nattt\source\repos\valaritas\print\obj\Debug\print.csproj.CoreCompileInputs.cache
+C:\Users\nattt\source\repos\valaritas\print\obj\Debug\print.csproj.CopyComplete
+C:\Users\nattt\source\repos\valaritas\print\obj\Debug\print.exe
+C:\Users\nattt\source\repos\valaritas\print\obj\Debug\print.pdb
