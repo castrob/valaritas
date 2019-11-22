@@ -2,6 +2,7 @@ package utils
 
 import (
 	"time"
+	"sync"
 )
 
 /**
@@ -11,6 +12,7 @@ import (
 type META struct {
 	Collections    map[string][]string `json:"collections"`
 	LastUpdateDate time.Time           `json:"lastUpdateDate"`
+	mux sync.Mutex
 }
 
 func (meta *META) FindMetadataByName(paramName string) (result bool) {

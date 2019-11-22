@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"sync"
 
 	"github.com/castrob/valaritas/utils"
 	"github.com/labstack/echo"
@@ -15,6 +16,7 @@ var (
 		Collections: make(map[string][]string),
 	}
 	lockedResources = &LOCK{}
+	mux sync.Mutex
 )
 
 /**
@@ -35,7 +37,7 @@ func Root(ctx echo.Context) error {
  */
 func Create(ctx echo.Context) error {
 	// lock arquivo de dados
-
+	mux.Lock()
 	var request = echo.Map{}
 	if err := ctx.Bind(&request); err != nil {
 		fmt.Println(err)
@@ -70,6 +72,7 @@ func Create(ctx echo.Context) error {
 	// fmt.Println(paramName)
 
 	// unlock arquivo de dados
+	mux.Unlock()
 	return ctx.JSON(http.StatusOK, fmt.Sprintf("Collection %s created successfully!"))
 }
 
@@ -77,6 +80,8 @@ func Create(ctx echo.Context) error {
  * Tratar os buscas em uma collection
  */
 func Retrieve(ctx echo.Context) error {
+
+	mux.Lock()
 	//var request = echo.Map{}
 	var paramName = ctx.ParamValues()[0]
 	fmt.Println("values %+v", paramName)
@@ -87,6 +92,8 @@ func Retrieve(ctx echo.Context) error {
 		//log.Printf("Collections paramName %+v", metadata.Collections[paramName])
 		Create(ctx)
 	}
+
+	mux.Unlock()
 	return ctx.JSON(http.StatusOK, "Search Working")
 }
 
@@ -94,8 +101,12 @@ func Retrieve(ctx echo.Context) error {
  * Tratar os updates em uma collection
  */
 func Update(ctx echo.Context) error {
+
+	mux.Lock()
 	var paramName = ctx.ParamValues()[0]
 	fmt.Println(paramName)
+
+	mux.Unlock()
 	return ctx.JSON(http.StatusOK, "Update Working")
 }
 
@@ -103,7 +114,9 @@ func Update(ctx echo.Context) error {
  * Tratar os deletes em uma collection
  */
 func Delete(ctx echo.Context) error {
+	mux.Lock()
 	var paramName = ctx.ParamValues()[0]
 	fmt.Println(paramName)
+	mux.Unlock()
 	return ctx.JSON(http.StatusOK, "Delete Working")
 }
