@@ -1,2 +1,3 @@
 # valaritas
-SGBD 
+
+Be wary of folly
