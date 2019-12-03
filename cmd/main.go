@@ -6,6 +6,11 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
+
+const (
+	JwtSecretKey = "b3@W4ry"
+)
+
 /**
  * A função main é responsável por inicializar o servidor e criar o listener para conexões na porta especificada
  * O Pacote labstack/echo é uma biblioteca/framework para facilitar funções de REST para a API.
@@ -15,14 +20,14 @@ import (
 func main() {
 	e := echo.New()
 	apiGroup := e.Group("/api")
-	apiGroup.Use(middleware.JWT([]byte("b3@W4ry")))
+	apiGroup.Use(middleware.JWT([]byte(JwtSecretKey)))
 
 	//Endpoits para cada função
 	apiGroup.GET("/", valaritas.Root)
 	apiGroup.POST("/:collection/_create", valaritas.Create)
-	apiGroup.GET("/:collection/_search", valaritas.Retrieve)
-	apiGroup.PUT("/:collection/_update", valaritas.Update)
-	apiGroup.DELETE("/:collection/_delete", valaritas.Delete)
+	apiGroup.POST("/:collection/_search", valaritas.Retrieve)
+	apiGroup.POST("/:collection/_update", valaritas.Update)
+	apiGroup.POST("/:collection/_delete", valaritas.Delete)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
