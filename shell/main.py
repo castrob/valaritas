@@ -19,14 +19,18 @@ while command != "exit":
         print(r.text)
     elif operation == "search":
         coll_name = cmd_arr[1]
-        # coll_vals = cmd_arr[2]
+        coll_vals = cmd_arr[2]
         url_path = "{0}/_search".format(coll_name)
-        r = requests.get(BASE_URL+url_path, headers=HEADERS)
+        r = requests.post(BASE_URL+url_path, data=coll_vals, headers=HEADERS)
         print(r.text)
     elif operation == "update":
         print(cmd_arr)
     elif operation == "delete":
-        print(cmd_arr)
+        coll_name = cmd_arr[1]
+        coll_vals = cmd_arr[2]
+        url_path = "{0}/_delete".format(coll_name)
+        r = requests.post(BASE_URL+url_path, data=coll_vals, headers=HEADERS)
+        print(r.text)
     elif operation == "help":
         print(
             '''create <collection name> <collection values> (e.g. create user {"name":"john doe"})''')
