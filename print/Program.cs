@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using data;
 using System.Web.Script.Serialization;
+using System.Net;
+using System.Windows;
+using System.Runtime.InteropServices;
 
 namespace print
 {
@@ -41,27 +44,29 @@ namespace print
 
             } while (continuar == true);
 
-            JavaScriptSerializer serializador = new JavaScriptSerializer();
-
-            string stringObjSerializado = serializador.Serialize(lista.Select(s => string.Concat(s.parametro, ": ", s.valor)));
 
 
-            Random random = new Random();
-            string fileName = "json" + (random.Next(1000));
-            string pathName = System.AppDomain.CurrentDomain.BaseDirectory.ToString();
-            string path = pathName + "arq_json\\" + fileName + ".json";
-            if (!File.Exists(path))
-            {
-                FileStream fs = File.Create(path);
-                fs.Dispose();
+            var AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmF0YWxpYSBQYXJzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.XHVYUrWeWX5FiAe2awgiMkJA0fwnDhCnug_3RHd3KVA";
+            var request = WebRequest.Create("http://localhost:8080/api/usuarios/_create");
+            var myHttpWebRequest = (HttpWebRequest)request;
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Headers.Add("Authorization", "Bearer " + AccessToken);
+            myHttpWebRequest.Accept = "application/json";
+            request.ContentType = "application/json";
+            request.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream())){
+                string json = new JavaScriptSerializer().Serialize(lista.Select(s => string.Format("{0} : {1}", s.parametro, s.valor)));
+                streamWriter.WriteLine(json);
+                streamWriter.Close();              
             }
-
-            StreamWriter stream = new StreamWriter(pathName + "arq_json\\"+ fileName + ".json");
-            stream.WriteLine(stringObjSerializado);
-            stream.Close();
-
-
-
-        }
+        var response = (HttpWebResponse)request.GetResponse();
+        using (var streamReader = new StreamReader(response.GetResponseStream()))
+        {
+                var result = streamReader.ReadToEnd();
+        }     
     }
+
 }
+}
+
